@@ -160,7 +160,6 @@ while True:
       # ~~~~ INSERT CODE ~~~~
       originServerRequest = 'GET ' + path + ' HTTP/1.1'
       originServerRequestHeader = 'Host: ' + hostname
-      
       # ~~~~ END CODE INSERT ~~~~
 
       # Construct the request to send to the origin server
@@ -181,10 +180,12 @@ while True:
 
       # Get the response from the origin server
       # ~~~~ INSERT CODE ~~~~
+      response = originServerSocket.recv(BUFFER_SIZE)
       # ~~~~ END CODE INSERT ~~~~
 
       # Send the response to the client
       # ~~~~ INSERT CODE ~~~~
+      clientSocket.sendall(response)
       # ~~~~ END CODE INSERT ~~~~
 
       # Create a new file in the cache for the requested file.
