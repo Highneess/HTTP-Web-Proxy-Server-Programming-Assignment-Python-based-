@@ -20,13 +20,7 @@ proxyPort = int(args.port)
 try:
   # Create a server socket
   # ~~~~ INSERT CODE ~~~~
-  # Create a server socket
   serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-  # ~~~~ END CODE INSERT ~~~~
-
-
   # ~~~~ END CODE INSERT ~~~~
   print ('Created socket')
 except:
@@ -36,11 +30,7 @@ except:
 try:
   # Bind the the server socket to a host and port
   # ~~~~ INSERT CODE ~~~~
-
-  # Bind the the server socket to a host and port
   serverSocket.bind((proxyHost, proxyPort))
-
-
   # ~~~~ END CODE INSERT ~~~~
   print ('Port is bound')
 except:
@@ -50,12 +40,7 @@ except:
 try:
   # Listen on the server socket
   # ~~~~ INSERT CODE ~~~~
-
-  # Listen on the server socket
   serverSocket.listen(5)
-  # Set the socket to non-blocking
-  serverSocket.setblocking(0)
-
   # ~~~~ END CODE INSERT ~~~~
   print ('Listening to socket')
 except:
@@ -70,12 +55,7 @@ while True:
   # Accept connection from client and store in the clientSocket
   try:
     # ~~~~ INSERT CODE ~~~~
-
-    # Accept connection from client and store in the clientSocket
-    clientSocket, clientAddress = serverSocket.accept()
-    # Set the socket to non-blocking
-    clientSocket.setblocking(0)
-
+    clientSocket, addr = serverSocket.accept()
     # ~~~~ END CODE INSERT ~~~~
     print ('Received a connection')
   except:
@@ -85,6 +65,11 @@ while True:
   # Get HTTP request from client
   # and store it in the variable: message_bytes
   # ~~~~ INSERT CODE ~~~~
+  try:
+    message_bytes = clientSocket.recv(BUFFER_SIZE)
+  except:
+    print ('Failed to receive request')
+    sys.exit()
   # ~~~~ END CODE INSERT ~~~~
   message = message_bytes.decode('utf-8')
   print ('Received request:')
